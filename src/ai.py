@@ -14,16 +14,14 @@ MAX_CONTEXT_TOKENS = 4000
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
-ai = AIChat(api_key=OPENAI_API_KEY, console=False, model="gpt-3.5-turbo-16k")
-
-if not os.path.isdir("./storage"):
-  utils.createStorage()
-
-storage_context = StorageContext.from_defaults(persist_dir='./storage')
-index = load_index_from_storage(storage_context)
 
 def sendAiRequest(query_str): 
   if not query_str: return ''
+  if not os.path.isdir("./storage"): utils.createStorage()
+  
+  ai = AIChat(api_key=OPENAI_API_KEY, console=False, model="gpt-3.5-turbo-16k")
+  storage_context = StorageContext.from_defaults(persist_dir='./storage')
+  index = load_index_from_storage(storage_context)
   
   sub_queries = ai(prompts.MULTIPLE_QUERY_GEN_PROMPT(3, query_str), output_schema=utils.GET_SUB_QUERIES_EVENT_METADATA)  
   retriever = index.as_retriever(similarity_top_k=3)
