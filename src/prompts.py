@@ -15,5 +15,6 @@ def MAIN_QUERY_PROMPT(context_str, query_str):
     "{context_str}"
     "\n---------------------\n"
     "Given this information, please answer the question in as much detail as possible: {query_str}\n"
+    "The answer must be less than 16000 words"
     .format(context_str=context_str, query_str=query_str)
   )
