@@ -1,10 +1,11 @@
 from pydantic import BaseModel, Field
-from llama_index import SimpleDirectoryReader, VectorStoreIndex
+from llama_index import SimpleDirectoryReader, VectorStoreIndex, ServiceContext
 
 def createStorage():
   documents = SimpleDirectoryReader('data').load_data()
-  index = VectorStoreIndex.from_documents(documents)
-  index.storage_context.persist(persist_dir='../storage')
+  service_context = ServiceContext.from_defaults(chunk_size=500)
+  index = VectorStoreIndex.from_documents(documents, service_context=service_context)
+  index.storage_context.persist(persist_dir='./storage')
   
 class GET_SUB_QUERIES_EVENT_METADATA(BaseModel):
     """Event information"""

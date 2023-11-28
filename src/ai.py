@@ -1,25 +1,25 @@
 import os
 import nltk
+import utils
+import prompts
 from dotenv import load_dotenv
 from simpleaichat import AIChat
 from llama_index import StorageContext, load_index_from_storage
 from nltk.tokenize import word_tokenize
-import prompts
-import utils
 
 nltk.download('punkt')
 load_dotenv()
 
-MAX_CONTEXT_TOKENS = 3500
+MAX_CONTEXT_TOKENS = 4000
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 ai = AIChat(api_key=OPENAI_API_KEY, console=False, model="gpt-3.5-turbo-16k")
 
-if not os.path.isdir("../storage"):
+if not os.path.isdir("./storage"):
   utils.createStorage()
 
-storage_context = StorageContext.from_defaults(persist_dir='../storage')
+storage_context = StorageContext.from_defaults(persist_dir='./storage')
 index = load_index_from_storage(storage_context)
 
 def sendAiRequest(query_str): 
