@@ -24,7 +24,7 @@ def sendAiRequest(query_str):
   storage_context = StorageContext.from_defaults(persist_dir=STORAGE_PATH)
   index = load_index_from_storage(storage_context)
   
-  sub_queries = ai(prompts.MULTIPLE_QUERY_GEN_PROMPT(3, query_str), output_schema=utils.GET_SUB_QUERIES_EVENT_METADATA)  
+  sub_queries = ai(prompts.MULTIPLE_QUERY_GEN_PROMPT(5, query_str), output_schema=utils.GET_SUB_QUERIES_EVENT_METADATA)  
   retriever = index.as_retriever(similarity_top_k=2)
   retrieved_nodes = {}
 
