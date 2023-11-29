@@ -10,21 +10,22 @@ from nltk.tokenize import word_tokenize
 nltk.download('punkt')
 load_dotenv()
 
-MAX_CONTEXT_TOKENS = 4000
+MAX_CONTEXT_TOKENS = 6000
+STORAGE_PATH = './storage'
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 def sendAiRequest(query_str): 
-  if not query_str: return ''
-  if not os.path.isdir("./storage"): utils.createStorage()
+  if not query_str: return '' 
+  if not os.path.isdir(STORAGE_PATH): utils.createStorage()
   
   ai = AIChat(api_key=OPENAI_API_KEY, console=False, model="gpt-3.5-turbo-16k")
-  storage_context = StorageContext.from_defaults(persist_dir='./storage')
+  storage_context = StorageContext.from_defaults(persist_dir=STORAGE_PATH)
   index = load_index_from_storage(storage_context)
   
   sub_queries = ai(prompts.MULTIPLE_QUERY_GEN_PROMPT(3, query_str), output_schema=utils.GET_SUB_QUERIES_EVENT_METADATA)  
-  retriever = index.as_retriever(similarity_top_k=3)
+  retriever = index.as_retriever(similarity_top_k=2)
   retrieved_nodes = {}
 
   for q in sub_queries:

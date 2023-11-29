@@ -1,10 +1,10 @@
 def MULTIPLE_QUERY_GEN_PROMPT(num_queries, query_str):
   return (
-    "You are a helpful assistant that generates multiple search queries based on a "
-    "single input query. Generate {num_queries} search queries, one on each line, "
-    "related to the following input query:\n"
-    "Query: {query_str}\n"
-    "Queries:\n"
+    "You are a helpful assistant that generates multiple small sub-questions based on a single question."
+    "We have provided question below. \n"
+    "{query_str}\n"
+    "Generete {num_queries} sub-questions for this question.\n"
+    "Return them one on each line.\n"
     .format(num_queries=num_queries, query_str=query_str)
   )
 
