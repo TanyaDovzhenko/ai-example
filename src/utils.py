@@ -2,8 +2,8 @@ from pydantic import BaseModel, Field
 from llama_index import SimpleDirectoryReader, VectorStoreIndex, ServiceContext
 
 def createStorage():
-  documents = SimpleDirectoryReader('data').load_data()
-  service_context = ServiceContext.from_defaults(chunk_size=1000)
+  documents = SimpleDirectoryReader('data').load_data()    
+  service_context = ServiceContext.from_defaults(chunk_size=1000, chunk_overlap=500)
   index = VectorStoreIndex.from_documents(documents, service_context=service_context)
   index.storage_context.persist(persist_dir='./storage')
   

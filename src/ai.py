@@ -25,7 +25,7 @@ def sendAiRequest(query_str):
   index = load_index_from_storage(storage_context)
   
   sub_queries = ai(prompts.MULTIPLE_QUERY_GEN_PROMPT(5, query_str), output_schema=utils.GET_SUB_QUERIES_EVENT_METADATA)  
-  retriever = index.as_retriever(similarity_top_k=2)
+  retriever = index.as_retriever(similarity_top_k=3)
   retrieved_nodes = {}
 
   for q in sub_queries:
